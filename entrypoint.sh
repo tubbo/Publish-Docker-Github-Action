@@ -173,9 +173,15 @@ useSnapshot() {
 
 build() {
   local BUILD_TAGS=""
+
   for TAG in ${TAGS}; do
     BUILD_TAGS="${BUILD_TAGS}-t ${INPUT_NAME}:${TAG} "
   done
+
+  if [[ -e "${INPUT_BUILDKIT}" ]]; then
+    DOCKER_BUILDKIT=1
+  fi
+
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} ${BUILD_TAGS} ${CONTEXT}
 }
 
